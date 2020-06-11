@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cuna.Mutual.Beck.End.Exercise.Api;
+using Cuna.Mutual.Beck.End.Exercise.Api.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+
+
+
 
 namespace Cuna.Mutual.Beck.End.Exercise
 {
@@ -30,6 +36,9 @@ namespace Cuna.Mutual.Beck.End.Exercise
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
             services.AddControllers();
+            services.AddDbContext<MacGuffinContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("RazorPagesMovieContext")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

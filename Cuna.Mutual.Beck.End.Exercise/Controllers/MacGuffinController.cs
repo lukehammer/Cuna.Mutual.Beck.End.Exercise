@@ -1,4 +1,5 @@
 ﻿using System;
+using Cuna.Mutual.Beck.End.Exercise.Api.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -104,16 +105,6 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
         {
             throw new NotImplementedException();
         }
-    }
-
-    public interface IMacGuffinRepository
-    {
-        void AddNew(MacGuffin body);
-
-        MacGuffin Get
-            (Guid id);
-
-        void Update(MacGuffin macGuffin);
     }
 
     public interface IThirdPartyService
