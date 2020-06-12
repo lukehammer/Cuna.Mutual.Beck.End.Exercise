@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Cuna.Mutual.Beck.End.Exercise.Api;
 using Cuna.Mutual.Beck.End.Exercise.Api.Data;
+using Cuna.Mutual.Beck.End.Exercise.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,7 +39,11 @@ namespace Cuna.Mutual.Beck.End.Exercise
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
             services.AddControllers();
             services.AddDbContext<MacGuffinContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("RazorPagesMovieContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("MacGuffinContext")));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IThirdPartyService, ThirdPartyService>();
+            services.AddTransient<IMacGuffinRepository, MacGuffinRepository>();
+
 
         }
 
@@ -48,8 +54,16 @@ namespace Cuna.Mutual.Beck.End.Exercise
             {
                 app.UseDeveloperExceptionPage();
             }
+            //turning of https redirection because site is only an api This will lower some veteran of abilities of bots automatically sniffing open HTTP ports.  and then attacking the related https ports.
+            //app.UseHttpsRedirection();
 
-            app.UseHttpsRedirection();
+
+
+
+            //I would be turning on Hsts But for the sake of the demo I'm going to leave it off I would consider security with certificate management to be outside scope what was asked for.
+            //app.UseHsts();
+
+
 
             app.UseRouting();
 
