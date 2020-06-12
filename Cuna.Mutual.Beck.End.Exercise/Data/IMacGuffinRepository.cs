@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Cuna.Mutual.Beck.End.Exercise.Api.Controllers;
 
 namespace Cuna.Mutual.Beck.End.Exercise.Api.Data
@@ -29,7 +30,7 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Data
 
         public MacGuffin Get(Guid id)
         {
-            return _context.MacGuffin.Find(id);
+            return _context.MacGuffin.First(x => x.Id == id);
         }
 
         public void Update(MacGuffin macGuffin)

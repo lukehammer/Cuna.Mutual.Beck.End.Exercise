@@ -1,5 +1,6 @@
 using Cuna.Mutual.Beck.End.Exercise.Api.Controllers;
 using Cuna.Mutual.Beck.End.Exercise.Api.Data;
+using Cuna.Mutual.Beck.End.Exercise.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;

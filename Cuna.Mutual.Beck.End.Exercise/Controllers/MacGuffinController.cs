@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using Cuna.Mutual.Beck.End.Exercise.Api.Data;
 using Cuna.Mutual.Beck.End.Exercise.Api.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,15 +11,15 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
     //[Authorize]
 
 
-
     [ApiController]
     [Route("[controller]")]
     public class MacGuffinController : ControllerBase
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger<MacGuffinController> _logger;
         private readonly IMacGuffinRepository _macGuffinRepository;
         private readonly IThirdPartyService _thirdPartyService;
-        private IHttpContextAccessor _httpContextAccessor;
+
         public MacGuffinController(ILogger<MacGuffinController> logger, IThirdPartyService thirdPartyService,
             IMacGuffinRepository macGuffinRepository, IHttpContextAccessor httpContextAccessor)
         {
@@ -39,14 +36,18 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
             var macGuffin = new MacGuffin(incomingDto.Body);
             _thirdPartyService.Post(macGuffin);
             _macGuffinRepository.AddNew(macGuffin);
-           
-            string currentHost = _httpContextAccessor.HttpContext.Request.Host.Value;
-            
+
+
             var statusURi = new UriBuilder
             {
-                Host = currentHost,
-                Path = $"status/{macGuffin.Id}"
+                Path = $"status/{macGuffin.Id}", 
+                Host = _httpContextAccessor.HttpContext.Request.Host.Host
             };
+
+            if (_httpContextAccessor.HttpContext.Request.Host.Port.HasValue)
+            {statusURi.Port = (int) _httpContextAccessor.HttpContext.Request.Host.Port;}
+
+
             var userCallBack = statusURi.Uri;
             return Created(userCallBack, macGuffin);
         }
@@ -74,17 +75,14 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
         }
 
 
-        [HttpPut]
+        [HttpGet]
         [Route("/status/{id}")]
-        public ActionResult Put(Guid id)
+        public ActionResult Get(Guid id)
         {
             var macGuffin = _macGuffinRepository.Get(id);
-          
+
             return Ok(macGuffin);
         }
-
-
-
     }
 
 
@@ -118,7 +116,6 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
         }
     }
 
-  
 
     public class MacGuffinDto
     {
