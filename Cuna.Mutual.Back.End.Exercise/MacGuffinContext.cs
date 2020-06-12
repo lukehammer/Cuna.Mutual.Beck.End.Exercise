@@ -2,7 +2,7 @@ using Cuna.Mutual.Back.End.Exercise.Api.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Cuna.Mutual.Back.End.Exercise.Api.Data
+namespace Cuna.Mutual.Back.End.Exercise.Api
 {
     public class MacGuffinContext : DbContext
     {

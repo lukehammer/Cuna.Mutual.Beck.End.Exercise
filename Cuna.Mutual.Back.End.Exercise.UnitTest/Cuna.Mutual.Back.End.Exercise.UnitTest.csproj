@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cuna.Mutual.Beck.End.Exercise\Cuna.Mutual.Back.End.Exercise.Api.csproj" />
+    <ProjectReference Include="..\Cuna.Mutual.Back.End.Exercise\Cuna.Mutual.Back.End.Exercise.Api.csproj" />
   </ItemGroup>
 
 </Project>
