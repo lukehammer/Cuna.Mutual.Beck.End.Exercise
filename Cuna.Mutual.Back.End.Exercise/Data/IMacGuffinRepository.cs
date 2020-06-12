@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Cuna.Mutual.Back.End.Exercise.Api.Controllers;
+using Cuna.Mutual.Back.End.Exercise.Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cuna.Mutual.Back.End.Exercise.Api.Data
 {
@@ -8,8 +10,7 @@ namespace Cuna.Mutual.Back.End.Exercise.Api.Data
     {
         void AddNew(MacGuffin macGuffin);
 
-        MacGuffin Get
-            (Guid id);
+        MacGuffin Get(int id);
 
         void Update(MacGuffin macGuffin);
     }
@@ -25,18 +26,20 @@ namespace Cuna.Mutual.Back.End.Exercise.Api.Data
         public void AddNew(MacGuffin macGuffin)
         {
             _context.MacGuffin.Add(macGuffin);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
-        public MacGuffin Get(Guid id)
+        public MacGuffin Get(int id)
         {
-            return _context.MacGuffin.First(x => x.Id == id);
+            return _context.MacGuffin.Include(M => M.Statuses).First(x => x.Id == id);
         }
 
         public void Update(MacGuffin macGuffin)
         {
+          
             _context.MacGuffin.Update(macGuffin);
-            _context.SaveChangesAsync();
+            
+            _context.SaveChanges();
         }
     }
 
