@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cuna.Mutual.Beck.End.Exercise.Api.Controllers;
+using Cuna.Mutual.Back.End.Exercise.Api.Controllers;
 
-namespace Cuna.Mutual.Beck.End.Exercise.Api.Services
+namespace Cuna.Mutual.Back.End.Exercise.Api.Services
 {
     public interface IThirdPartyService
     {

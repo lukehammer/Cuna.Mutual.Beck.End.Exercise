@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Cuna.Mutual.Beck.End.Exercise.Api.Controllers;
+using Cuna.Mutual.Back.End.Exercise.Api.Controllers;
 
-namespace Cuna.Mutual.Beck.End.Exercise.Api.Data
+namespace Cuna.Mutual.Back.End.Exercise.Api.Data
 {
     public interface IMacGuffinRepository
     {

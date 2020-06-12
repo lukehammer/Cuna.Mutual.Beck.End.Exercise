@@ -1,6 +1,6 @@
 using System;
 
-namespace Cuna.Mutual.Beck.End.Exercise
+namespace Cuna.Mutual.Back.End.Exercise.Api
 {
     public class WeatherForecast
     {

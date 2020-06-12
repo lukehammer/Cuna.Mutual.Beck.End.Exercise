@@ -4,11 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-Cuna.Mutual.Beck.End.Exercise-8DF0C48B-E441-431D-9CA3-7CA63BD6AD79</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
-    <AssemblyName>Cuna.Mutual.Beck.End.Exercise.Api</AssemblyName>
-    <RootNamespace>Cuna.Mutual.Beck.End.Exercise.Api</RootNamespace>
+    <AssemblyName>Cuna.Mutual.Back.End.Exercise.Api</AssemblyName>
+    <RootNamespace>Cuna.Mutual.Back.End.Exercise.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />

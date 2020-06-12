@@ -1,11 +1,11 @@
 ﻿using System;
-using Cuna.Mutual.Beck.End.Exercise.Api.Data;
-using Cuna.Mutual.Beck.End.Exercise.Api.Services;
+using Cuna.Mutual.Back.End.Exercise.Api.Data;
+using Cuna.Mutual.Back.End.Exercise.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
+namespace Cuna.Mutual.Back.End.Exercise.Api.Controllers
 {
     // Commenting out the authorized attribute as setting up security at this level is not within scope of this code challenge.  
     //[Authorize]

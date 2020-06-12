@@ -1,12 +1,12 @@
-using Cuna.Mutual.Beck.End.Exercise.Api.Controllers;
-using Cuna.Mutual.Beck.End.Exercise.Api.Data;
-using Cuna.Mutual.Beck.End.Exercise.Api.Services;
+using Cuna.Mutual.Back.End.Exercise.Api.Controllers;
+using Cuna.Mutual.Back.End.Exercise.Api.Data;
+using Cuna.Mutual.Back.End.Exercise.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-namespace Cuna.Mutual.Beck.End.Exercise.UnitTest
+namespace Cuna.Mutual.Back.End.Exercise.UnitTest
 {
     public class MainControllerTest
     {

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cuna.Mutual.Beck.End.Exercise.Api", "Cuna.Mutual.Beck.End.Exercise\Cuna.Mutual.Beck.End.Exercise.Api.csproj", "{6955B9BA-7BE8-4F72-B6BE-8DC49D150565}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cuna.Mutual.Back.End.Exercise.Api", "Cuna.Mutual.Beck.End.Exercise\Cuna.Mutual.Back.End.Exercise.Api.csproj", "{6955B9BA-7BE8-4F72-B6BE-8DC49D150565}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cuna.Mutual.Beck.End.Exercise.UnitTest", "Cuna.Mutual.Beck.End.Exercise.UnitTest\Cuna.Mutual.Beck.End.Exercise.UnitTest.csproj", "{60305A20-2F63-4F7B-B682-82C1494124B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cuna.Mutual.Back.End.Exercise.UnitTest", "Cuna.Mutual.Beck.End.Exercise.UnitTest\Cuna.Mutual.Back.End.Exercise.UnitTest.csproj", "{60305A20-2F63-4F7B-B682-82C1494124B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

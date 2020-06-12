@@ -1,27 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cuna.Mutual.Beck.End.Exercise.Api;
-using Cuna.Mutual.Beck.End.Exercise.Api.Data;
-using Cuna.Mutual.Beck.End.Exercise.Api.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Cuna.Mutual.Back.End.Exercise.Api.Data;
+using Cuna.Mutual.Back.End.Exercise.Api.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 
-
-
-
-namespace Cuna.Mutual.Beck.End.Exercise
+namespace Cuna.Mutual.Back.End.Exercise.Api
 {
     public class Startup
     {
