@@ -1,9 +1,15 @@
 ﻿using System;
+using System.IO;
+using System.IO.Pipelines;
+using System.Text;
+using Cuna.Mutual.Back.End.Exercise.Api.ApiModels;
 using Cuna.Mutual.Back.End.Exercise.Api.Data;
+using Cuna.Mutual.Back.End.Exercise.Api.Models;
 using Cuna.Mutual.Back.End.Exercise.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 
 namespace Cuna.Mutual.Back.End.Exercise.Api.Controllers
 {
@@ -32,15 +38,15 @@ namespace Cuna.Mutual.Back.End.Exercise.Api.Controllers
         [HttpPost]
         [Route("/Request")]
         public ActionResult NewRequest(MacGuffinDto incomingDto)
+        
         {
             var macGuffin = new MacGuffin(incomingDto.Body);
             _thirdPartyService.Post(macGuffin);
             _macGuffinRepository.AddNew(macGuffin);
-
-
+            
             var statusURi = new UriBuilder
             {
-                Path = $"status/{macGuffin.Id}", 
+                Path = $"callback/{macGuffin.Id}", 
                 Host = _httpContextAccessor.HttpContext.Request.Host.Host
             };
 
@@ -53,23 +59,38 @@ namespace Cuna.Mutual.Back.End.Exercise.Api.Controllers
         }
 
 
+
         [HttpPost]
         [Route("/callback/{id}")]
-        public ActionResult PostRequest(string status, Guid id)
+        public ActionResult StartedCallBack(int id)
         {
             var macGuffin = _macGuffinRepository.Get(id);
+            var status = new Status()
+            {
+                State = "Started"
+            };
             macGuffin.UpdateStatus(status);
             _macGuffinRepository.Update(macGuffin);
             return NoContent();
         }
 
 
+
+
         [HttpPut]
         [Route("/callback/{id}")]
-        public ActionResult Put(MacGuffinPutDto macGuffinPutDto, Guid id)
+        public ActionResult AddStatus(int id, [FromBody] StatusDto statusDto)
         {
+
             var macGuffin = _macGuffinRepository.Get(id);
-            macGuffin.UpdateStatus(macGuffinPutDto);
+            Status status = new Status()
+                {
+                    Detail = statusDto.Detail,
+                    State = statusDto.Status
+                };
+            
+
+            macGuffin.UpdateStatus(status);
             _macGuffinRepository.Update(macGuffin);
             return NoContent();
         }
@@ -77,48 +98,11 @@ namespace Cuna.Mutual.Back.End.Exercise.Api.Controllers
 
         [HttpGet]
         [Route("/status/{id}")]
-        public ActionResult Get(Guid id)
+        public ActionResult GetMacGuffin(int id)
         {
             var macGuffin = _macGuffinRepository.Get(id);
 
             return Ok(macGuffin);
         }
-    }
-
-
-    public class MacGuffinPutDto
-    {
-        public string Status { get; set; }
-        public string Detail { get; set; }
-        public string Body { get; set; }
-    }
-
-
-    public class MacGuffin
-    {
-        public MacGuffin(string body)
-        {
-            Body = body;
-            Id = Guid.NewGuid();
-        }
-
-        public string Body { get; }
-        public Guid Id { get; }
-
-        public void UpdateStatus(MacGuffinPutDto status)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateStatus(string status)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
-    public class MacGuffinDto
-    {
-        public string Body { get; set; }
     }
 }
