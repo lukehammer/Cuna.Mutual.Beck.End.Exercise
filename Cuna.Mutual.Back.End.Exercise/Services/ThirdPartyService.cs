@@ -1,5 +1,6 @@
 ﻿using System;
 using Cuna.Mutual.Back.End.Exercise.Api.Controllers;
+using Cuna.Mutual.Back.End.Exercise.Api.Models;
 
 namespace Cuna.Mutual.Back.End.Exercise.Api.Services
 {

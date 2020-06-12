@@ -1,7 +1,11 @@
+using Cuna.Mutual.Back.End.Exercise.Api.ApiModels;
 using Cuna.Mutual.Back.End.Exercise.Api.Controllers;
 using Cuna.Mutual.Back.End.Exercise.Api.Data;
+using Cuna.Mutual.Back.End.Exercise.Api.Models;
 using Cuna.Mutual.Back.End.Exercise.Api.Services;
+using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
@@ -26,6 +30,7 @@ namespace Cuna.Mutual.Back.End.Exercise.UnitTest
 
         private MacGuffinController CreateNewController()
         {
+          
             var context = new DefaultHttpContext();
             _mockHttpContextAccessor.Setup(x => x.HttpContext).Returns(context);
 
@@ -64,26 +69,80 @@ namespace Cuna.Mutual.Back.End.Exercise.UnitTest
 
             //Act
 
-            controller.NewRequest(dto);
+            var result = controller.NewRequest(dto);
 
             //Assert
-
+            var apiResult = Assert.IsType<CreatedResult>(result);
             _mockMacGuffinRepository.Verify(x => x.AddNew(It.IsAny<MacGuffin>()), Times.Once);
+            apiResult.Location.Should().EndWith("/callback/0");
         }
 
 
         
         [Fact]
-        public void UoW_InitialCondition_ExpectedResult()
+        public void CallBack_FromThirdParty_StartedCallBack_ExpectedUpdatedRecord()
         {
             //Arrange
 
+            MacGuffin mcGuffin = new MacGuffin("test");
+            _mockMacGuffinRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(mcGuffin);
+
+            var controller = CreateNewController();
 
             //Act
+            var result = controller.StartedCallBack(1);
 
+            //Assert
+            var apiResult = Assert.IsType<NoContentResult>(result);
+            _mockMacGuffinRepository.Verify(x => x.Update(mcGuffin), Times.AtLeastOnce());
+          
+        }
+
+
+        [Fact]
+        public void CallBack_FromThirdParty_AddStatus_ExpectedUpdatedRecord()
+        {
+            //Arrange
+
+            MacGuffin mcGuffin = new MacGuffin("test");
+            _mockMacGuffinRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(mcGuffin);
+
+            var controller = CreateNewController();
+           
+
+
+            //Act
+            StatusDto status = new StatusDto{Status = "complete", Detail = "just finished"};
+            var result = controller.AddStatus(1, status);
+
+            //Assert
+            var apiResult = Assert.IsType<NoContentResult>(result);
+            _mockMacGuffinRepository.Verify(x => x.Update(mcGuffin), Times.AtLeastOnce());
+        }
+
+
+
+
+        [Fact]
+        public void Check_getter()
+        {
+            //Arrange
+
+            MacGuffin mcGuffin = new MacGuffin("test");
+            _mockMacGuffinRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(mcGuffin);
+
+            var controller = CreateNewController();
+
+            //Act
+         
+            var result = controller.GetMacGuffin( 1);
 
             //Assert
 
+
+            var apiResult = Assert.IsType<OkObjectResult>(result);
+            apiResult.Value.Should().Be(mcGuffin);
         }
+
     }
 }

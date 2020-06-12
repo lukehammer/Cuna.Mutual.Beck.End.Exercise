@@ -27,8 +27,11 @@ namespace Cuna.Mutual.Back.End.Exercise.Api
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
             services.AddControllers();
+
             services.AddDbContext<MacGuffinContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MacGuffinContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+           // services.AddDbContext<MacGuffinContext>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IThirdPartyService, ThirdPartyService>();
             services.AddTransient<IMacGuffinRepository, MacGuffinRepository>();
