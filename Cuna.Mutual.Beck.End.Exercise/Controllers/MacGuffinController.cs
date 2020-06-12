@@ -1,12 +1,20 @@
 ﻿using System;
+using System.Diagnostics;
 using Cuna.Mutual.Beck.End.Exercise.Api.Data;
+using Cuna.Mutual.Beck.End.Exercise.Api.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
 {
-    [Authorize]
+    // Commenting out the authorized attribute as setting up security at this level is not within scope of this code challenge.  
+    //[Authorize]
+
+
+
     [ApiController]
     [Route("[controller]")]
     public class MacGuffinController : ControllerBase
@@ -14,12 +22,13 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
         private readonly ILogger<MacGuffinController> _logger;
         private readonly IMacGuffinRepository _macGuffinRepository;
         private readonly IThirdPartyService _thirdPartyService;
-
+        private IHttpContextAccessor _httpContextAccessor;
         public MacGuffinController(ILogger<MacGuffinController> logger, IThirdPartyService thirdPartyService,
-            IMacGuffinRepository macGuffinRepository)
+            IMacGuffinRepository macGuffinRepository, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _thirdPartyService = thirdPartyService;
+            _httpContextAccessor = httpContextAccessor;
             _macGuffinRepository = macGuffinRepository;
         }
 
@@ -30,10 +39,12 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
             var macGuffin = new MacGuffin(incomingDto.Body);
             _thirdPartyService.Post(macGuffin);
             _macGuffinRepository.AddNew(macGuffin);
-
+           
+            string currentHost = _httpContextAccessor.HttpContext.Request.Host.Value;
+            
             var statusURi = new UriBuilder
             {
-                Host = Request.Host.Host,
+                Host = currentHost,
                 Path = $"status/{macGuffin.Id}"
             };
             var userCallBack = statusURi.Uri;
@@ -107,11 +118,7 @@ namespace Cuna.Mutual.Beck.End.Exercise.Api.Controllers
         }
     }
 
-    public interface IThirdPartyService
-    {
-        void Post(string body, Uri callBackUri);
-        void Post(MacGuffin macGuffin);
-    }
+  
 
     public class MacGuffinDto
     {
